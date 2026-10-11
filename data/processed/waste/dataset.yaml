@@ -1,0 +1,11 @@
+# EcoSentinel AI - Waste Dataset Configuration (YOLO11n)
+path: D:/EcoSentinel AI/data/processed/waste
+train: images/train
+val: images/val
+test: images/test
+
+names:
+  0: Bottle
+  1: Plastic_bag
+  2: Can
+  3: Cup

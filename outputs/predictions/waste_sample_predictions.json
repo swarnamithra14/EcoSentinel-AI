@@ -1,0 +1,159 @@
+[
+  {
+    "split": "test",
+    "file": "taco_00029.jpg",
+    "detections": {
+      "Plastic_bag": 2
+    },
+    "output_image": "outputs\\predictions\\test_pred_1_taco_00029.jpg"
+  },
+  {
+    "split": "test",
+    "file": "taco_00406.jpeg",
+    "detections": {
+      "Plastic_bag": 1
+    },
+    "output_image": "outputs\\predictions\\test_pred_2_taco_00406.jpg"
+  },
+  {
+    "split": "test",
+    "file": "taco_00493.jpeg",
+    "detections": {
+      "Bottle": 3
+    },
+    "output_image": "outputs\\predictions\\test_pred_3_taco_00493.jpg"
+  },
+  {
+    "split": "test",
+    "file": "taco_00495.jpeg",
+    "detections": {
+      "Plastic_bag": 1,
+      "Can": 1
+    },
+    "output_image": "outputs\\predictions\\test_pred_4_taco_00495.jpg"
+  },
+  {
+    "split": "test",
+    "file": "taco_00767.jpg",
+    "detections": {
+      "Can": 1
+    },
+    "output_image": "outputs\\predictions\\test_pred_6_taco_00767.jpg"
+  },
+  {
+    "split": "test",
+    "file": "taco_01033.jpg",
+    "detections": {
+      "Bottle": 1
+    },
+    "output_image": "outputs\\predictions\\test_pred_8_taco_01033.jpg"
+  },
+  {
+    "split": "test",
+    "file": "taco_01150.jpg",
+    "detections": {
+      "Bottle": 1,
+      "Plastic_bag": 1,
+      "Can": 1
+    },
+    "output_image": "outputs\\predictions\\test_pred_9_taco_01150.jpg"
+  },
+  {
+    "split": "test",
+    "file": "taco_01152.jpg",
+    "detections": {
+      "Can": 2,
+      "Plastic_bag": 1
+    },
+    "output_image": "outputs\\predictions\\test_pred_10_taco_01152.jpg"
+  },
+  {
+    "split": "test",
+    "file": "taco_01162.jpg",
+    "detections": {
+      "Bottle": 1,
+      "Plastic_bag": 1,
+      "Can": 1
+    },
+    "output_image": "outputs\\predictions\\test_pred_11_taco_01162.jpg"
+  },
+  {
+    "split": "test",
+    "file": "taco_01341.jpg",
+    "detections": {
+      "Bottle": 1
+    },
+    "output_image": "outputs\\predictions\\test_pred_12_taco_01341.jpg"
+  },
+  {
+    "split": "val",
+    "file": "taco_00070.jpg",
+    "detections": {
+      "Plastic_bag": 2
+    },
+    "output_image": "outputs\\predictions\\val_pred_2_taco_00070.jpg"
+  },
+  {
+    "split": "val",
+    "file": "taco_00284.jpeg",
+    "detections": {
+      "Can": 1,
+      "Bottle": 1,
+      "Plastic_bag": 1
+    },
+    "output_image": "outputs\\predictions\\val_pred_4_taco_00284.jpg"
+  },
+  {
+    "split": "val",
+    "file": "taco_00285.jpeg",
+    "detections": {
+      "Plastic_bag": 1
+    },
+    "output_image": "outputs\\predictions\\val_pred_5_taco_00285.jpg"
+  },
+  {
+    "split": "val",
+    "file": "taco_00300.jpeg",
+    "detections": {
+      "Bottle": 1,
+      "Plastic_bag": 1
+    },
+    "output_image": "outputs\\predictions\\val_pred_6_taco_00300.jpg"
+  },
+  {
+    "split": "val",
+    "file": "taco_00345.jpeg",
+    "detections": {
+      "Bottle": 1,
+      "Plastic_bag": 1,
+      "Can": 1
+    },
+    "output_image": "outputs\\predictions\\val_pred_7_taco_00345.jpg"
+  },
+  {
+    "split": "val",
+    "file": "taco_00383.jpeg",
+    "detections": {
+      "Bottle": 1,
+      "Plastic_bag": 1
+    },
+    "output_image": "outputs\\predictions\\val_pred_8_taco_00383.jpg"
+  },
+  {
+    "split": "val",
+    "file": "taco_00479.jpeg",
+    "detections": {
+      "Bottle": 2
+    },
+    "output_image": "outputs\\predictions\\val_pred_9_taco_00479.jpg"
+  },
+  {
+    "split": "val",
+    "file": "taco_00483.jpeg",
+    "detections": {
+      "Bottle": 3,
+      "Can": 1
+    },
+    "output_image": "outputs\\predictions\\val_pred_10_taco_00483.jpg"
+  }
+]

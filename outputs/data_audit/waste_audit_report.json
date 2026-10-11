@@ -1,0 +1,41 @@
+{
+  "total_images_checked": 116,
+  "split_counts": {
+    "train": 81,
+    "val": 23,
+    "test": 12
+  },
+  "class_distribution": {
+    "train": {
+      "Bottle": 41,
+      "Can": 52,
+      "Plastic_bag": 68,
+      "Cup": 6
+    },
+    "val": {
+      "Bottle": 13,
+      "Plastic_bag": 10,
+      "Can": 4
+    },
+    "test": {
+      "Can": 6,
+      "Plastic_bag": 10,
+      "Bottle": 2
+    }
+  },
+  "corrupt_images_found": 0,
+  "invalid_bounding_boxes": 0,
+  "split_leakage_detected": false,
+  "leakage_details": {
+    "train_val_overlap": 0,
+    "train_test_overlap": 0,
+    "val_test_overlap": 0
+  },
+  "target_classes": {
+    "0": "Bottle",
+    "1": "Plastic_bag",
+    "2": "Can",
+    "3": "Cup"
+  },
+  "visualization_saved": "outputs\\data_audit\\waste_class_distribution.png"
+}

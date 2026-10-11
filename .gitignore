@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+
+# Data and Raw files
+data/raw/
+data/processed/waste/images/
+*.cache
+*.zip
+*.tar.gz
+
+# Model weights and checkpoints
+*.pt
+*.pth
+*.onnx
+models/*.pt
+runs/
+
+# Streamlit & IDE
+.streamlit/
+.idea/
+.vscode/
+*.swp
+
+# OS generated
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+
+# Temporary outputs / scratch
+scratch/
+downloaded_doc_summary.txt
