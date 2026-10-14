@@ -240,7 +240,6 @@ def update_status(report_id):
     data = request.get_json(force=True, silent=True) or {}
     new_status = data.get("status")
     notes = data.get("note") or data.get("notes") or "Status updated via dashboard"
-    resolved_image_path = data.get("resolved_image_path")
     
     if new_status not in VALID_STATUSES:
         return jsonify({
@@ -249,12 +248,7 @@ def update_status(report_id):
         }), 400
         
     try:
-        success = update_report_status(
-            report_id, 
-            new_status, 
-            notes=notes, 
-            resolved_image_path=resolved_image_path
-        )
+        success = update_report_status(report_id, new_status, notes=notes)
         if not success:
             return jsonify({"status": "error", "message": "Report not found"}), 404
             
@@ -262,157 +256,6 @@ def update_status(report_id):
         return jsonify({"status": "success", "report": updated})
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 400
-
-
-# Demo user database for role-based authentication
-DEMO_USERS = {
-    "admin@ecosentinel.gov": {
-        "email": "admin@ecosentinel.gov",
-        "password": "admin123",
-        "name": "Admin Officer Swarna",
-        "role": "admin",
-        "role_title": "Chief Municipal Sanitation Officer",
-        "badge_id": "ADM-7749",
-        "department": "City Environmental Protection & Sanitation Directorate"
-    },
-    "worker@sanitation.gov": {
-        "email": "worker@sanitation.gov",
-        "password": "cleaner123",
-        "name": "Ravi Kumar",
-        "role": "worker",
-        "role_title": "Senior Field Sanitation Specialist",
-        "badge_id": "SN-CREW-12",
-        "department": "Zone 4 Rapid Cleanup & Hazardous Waste Unit"
-    },
-    "user@ecosentinel.org": {
-        "email": "user@ecosentinel.org",
-        "password": "citizen123",
-        "name": "Surya Prakash",
-        "role": "citizen",
-        "role_title": "Verified Community Sentinel",
-        "badge_id": "CIT-3301",
-        "department": "Public Environmental Watch Volunteer"
-    },
-    "suryaprakash9320@gmail.com": {
-        "email": "suryaprakash9320@gmail.com",
-        "password": "citizen123",
-        "name": "Surya Prakash",
-        "role": "citizen",
-        "role_title": "Verified Community Sentinel",
-        "badge_id": "CIT-9320",
-        "department": "Civic Environmental Action Group"
-    }
-}
-
-
-@app.route('/api/auth/demo-accounts', methods=['GET'])
-def get_demo_accounts():
-    """Returns sample demo logins for quick 1-click testing."""
-    accounts = []
-    for user in DEMO_USERS.values():
-        accounts.append({
-            "email": user["email"],
-            "password": user["password"],
-            "name": user["name"],
-            "role": user["role"],
-            "role_title": user["role_title"],
-            "badge_id": user["badge_id"],
-            "department": user["department"]
-        })
-    return jsonify({"status": "success", "accounts": accounts})
-
-
-@app.route('/api/auth/login', methods=['POST'])
-def auth_login():
-    """Authenticates users, admins, and sanitation workers."""
-    data = request.get_json(force=True, silent=True) or {}
-    email = data.get("email", "").strip().lower()
-    password = data.get("password", "").strip()
-    requested_role = data.get("role", "").strip().lower()
-
-    if not email:
-        return jsonify({"status": "error", "message": "Email address or username required."}), 400
-
-    # Check registered demo user
-    matched_user = None
-    for k, u in DEMO_USERS.items():
-        if k.lower() == email or u["email"].lower() == email:
-            matched_user = u
-            break
-
-    if matched_user:
-        # If password is provided, verify it (demo allows password or matches)
-        if password and password != matched_user["password"]:
-            return jsonify({"status": "error", "message": "Incorrect password. Use demo password or 1-click login."}), 401
-        
-        # Override role if explicitly chosen by user
-        user_data = dict(matched_user)
-        if requested_role and requested_role in ["citizen", "admin", "worker"]:
-            user_data["role"] = requested_role
-            if requested_role == "worker":
-                user_data["role_title"] = "Field Sanitation Specialist"
-            elif requested_role == "admin":
-                user_data["role_title"] = "Municipal Admin Officer"
-            else:
-                user_data["role_title"] = "Verified Community Sentinel"
-        
-        return jsonify({
-            "status": "success",
-            "message": f"Welcome back, {user_data['name']}!",
-            "user": user_data
-        })
-
-    # Graceful fallback for custom emails/usernames
-    role = requested_role if requested_role in ["citizen", "admin", "worker"] else "citizen"
-    display_name = email.split("@")[0].replace(".", " ").title()
-    
-    role_titles = {
-        "admin": "Municipal Sanitation Officer",
-        "worker": "Sanitation Field Crew Operator",
-        "citizen": "Public Community Sentinel"
-    }
-    
-    custom_user = {
-        "email": email,
-        "name": display_name,
-        "role": role,
-        "role_title": role_titles.get(role, "Environmental Sentinel"),
-        "badge_id": f"{role[:3].upper()}-{abs(hash(email)) % 9000 + 1000}",
-        "department": "EcoSentinel Civic Action Network"
-    }
-    
-    return jsonify({
-        "status": "success",
-        "message": f"Logged in as {custom_user['name']} ({role.capitalize()})",
-        "user": custom_user
-    })
-
-
-@app.route('/api/worker/tasks', methods=['GET'])
-def get_worker_tasks():
-    """Returns priority work orders specifically for sanitation workers."""
-    reports = get_all_reports()
-    prioritized = prioritize_all_reports(reports)
-    
-    # Priority status filter: Cleanup Assigned, Reported, Under Review
-    active_tasks = [
-        r for r in prioritized 
-        if r.get("status") in ["Cleanup Assigned", "Reported", "Under Review"]
-    ]
-    
-    # Completed tasks for shift history
-    completed_tasks = [
-        r for r in prioritized
-        if r.get("status") == "Resolved"
-    ]
-    
-    return jsonify({
-        "status": "success",
-        "total_active": len(active_tasks),
-        "total_completed": len(completed_tasks),
-        "active_tasks": active_tasks,
-        "completed_tasks": completed_tasks[:20]
-    })
 
 
 @app.route('/api/reports/<int:report_id>/verify', methods=['PATCH'])

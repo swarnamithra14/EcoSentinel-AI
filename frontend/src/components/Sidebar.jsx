@@ -7,60 +7,32 @@ import {
   FileText, 
   BarChart3, 
   HelpCircle,
-  ShieldCheck, 
-  Search, 
-  User, 
-  Shield,
-  Truck,
-  LogOut,
-  ChevronRight
+  ShieldCheck,
+  Search,
+  User,
+  Shield
 } from 'lucide-react';
 
-export default function Sidebar({ currentTab, setTab, stats, role, setRole, user, onLogout }) {
-  // Navigation for Citizen
+export default function Sidebar({ currentTab, setTab, stats, role, setRole }) {
+  // Navigation for Citizen vs Admin
   const citizenItems = [
     { id: 'waste', label: 'Report Waste Litter', icon: Trash2 },
     { id: 'water', label: 'Check Water Safety', icon: Droplets },
     { id: 'track', label: 'Track My Incident', icon: Search },
-    { id: 'workflow', label: 'Community Guide', icon: HelpCircle },
+    { id: 'workflow', label: 'How It Works', icon: HelpCircle },
   ];
 
-  // Navigation for Admin
   const adminItems = [
     { id: 'dashboard', label: 'Command Overview', icon: Activity },
     { id: 'hotspots', label: 'Priority Hotspots', icon: AlertTriangle, badge: stats?.critical_hotspots },
     { id: 'reports', label: 'Incident Records', icon: FileText, badge: stats?.total_reports },
-    { id: 'worker-tasks', label: 'Sanitation Dispatch', icon: Truck },
     { id: 'waste', label: 'Waste Vision Studio', icon: Trash2 },
     { id: 'water', label: 'Water Analysis Lab', icon: Droplets },
     { id: 'analytics', label: 'Model Evaluation', icon: BarChart3 },
     { id: 'workflow', label: 'System Architecture', icon: HelpCircle },
   ];
 
-  // Navigation for Sanitation Worker
-  const workerItems = [
-    { id: 'worker-tasks', label: 'Sanitation Orders', icon: Truck, badge: stats?.status_breakdown?.['Cleanup Assigned'] || stats?.total_reports },
-    { id: 'track', label: 'Incident Lookup', icon: Search },
-    { id: 'waste', label: 'Waste Vision Studio', icon: Trash2 },
-    { id: 'workflow', label: 'Field Safety Guide', icon: HelpCircle },
-  ];
-
-  const getNavItems = () => {
-    if (role === 'admin') return adminItems;
-    if (role === 'worker') return workerItems;
-    return citizenItems;
-  };
-
-  const activeNavItems = getNavItems();
-
-  const getRoleTheme = () => {
-    if (role === 'admin') return { color: '#38bdf8', label: 'Municipal Officer', icon: Shield, bg: 'rgba(14, 165, 233, 0.15)' };
-    if (role === 'worker') return { color: '#fbbf24', label: 'Sanitation Worker', icon: Truck, bg: 'rgba(245, 158, 11, 0.15)' };
-    return { color: 'var(--emerald-400)', label: 'Citizen Sentinel', icon: User, bg: 'rgba(16, 185, 129, 0.15)' };
-  };
-
-  const roleMeta = getRoleTheme();
-  const RoleIcon = roleMeta.icon;
+  const activeNavItems = role === 'citizen' ? citizenItems : adminItems;
 
   return (
     <aside className="sidebar">
@@ -71,12 +43,20 @@ export default function Sidebar({ currentTab, setTab, stats, role, setRole, user
         </div>
         <div className="brand-text">
           <h1>EcoSentinel AI</h1>
-          <span>Multi-Role Command Grid</span>
+          <span>Dual Intelligence Grid</span>
         </div>
       </div>
 
-      {/* 3-Way Role Switcher Pill */}
-      <div className="sidebar-role-pill-row">
+      {/* Role Switcher Pill */}
+      <div style={{
+        background: 'rgba(15, 23, 42, 0.8)',
+        border: '1px solid var(--border-subtle)',
+        borderRadius: 'var(--radius-md)',
+        padding: '4px',
+        display: 'flex',
+        gap: '4px',
+        marginBottom: '20px'
+      }}>
         <button
           onClick={() => {
             setRole('citizen');
@@ -84,44 +64,66 @@ export default function Sidebar({ currentTab, setTab, stats, role, setRole, user
               setTab('waste');
             }
           }}
-          className={`role-toggle-btn ${role === 'citizen' ? 'active-citizen' : ''}`}
-          title="Citizen Public Portal"
+          style={{
+            flex: 1,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '6px',
+            padding: '8px 10px',
+            borderRadius: 'var(--radius-sm)',
+            border: 'none',
+            fontSize: '12px',
+            fontWeight: '600',
+            cursor: 'pointer',
+            transition: 'all 0.2s ease',
+            background: role === 'citizen' ? 'linear-gradient(135deg, var(--emerald-500), var(--emerald-600))' : 'transparent',
+            color: role === 'citizen' ? '#ffffff' : 'var(--text-secondary)'
+          }}
         >
-          <User size={13} />
-          <span>User</span>
+          <User size={14} /> Citizen
         </button>
 
         <button
           onClick={() => {
             setRole('admin');
-            setTab('dashboard');
+            if (currentTab === 'track') {
+              setTab('dashboard');
+            }
           }}
-          className={`role-toggle-btn ${role === 'admin' ? 'active-admin' : ''}`}
-          title="Municipal Admin Portal"
-        >
-          <Shield size={13} />
-          <span>Admin</span>
-        </button>
-
-        <button
-          onClick={() => {
-            setRole('worker');
-            setTab('worker-tasks');
+          style={{
+            flex: 1,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '6px',
+            padding: '8px 10px',
+            borderRadius: 'var(--radius-sm)',
+            border: 'none',
+            fontSize: '12px',
+            fontWeight: '600',
+            cursor: 'pointer',
+            transition: 'all 0.2s ease',
+            background: role === 'admin' ? 'linear-gradient(135deg, #0ea5e9, #0284c7)' : 'transparent',
+            color: role === 'admin' ? '#ffffff' : 'var(--text-secondary)'
           }}
-          className={`role-toggle-btn ${role === 'worker' ? 'active-worker' : ''}`}
-          title="Sanitation Worker Field Portal"
         >
-          <Truck size={13} />
-          <span>Worker</span>
+          <Shield size={14} /> Authority
         </button>
       </div>
 
       {/* Role-Specific Navigation Menu */}
       <nav className="nav-links">
-        <div className="nav-section-header">
-          {role === 'citizen' && 'Public Resident Portal'}
-          {role === 'admin' && 'Municipal Command & Triage'}
-          {role === 'worker' && 'Field Crew Sanitation Orders'}
+        <div style={{
+          fontSize: '11px',
+          fontWeight: '700',
+          textTransform: 'uppercase',
+          letterSpacing: '1px',
+          color: 'var(--text-muted)',
+          paddingLeft: '12px',
+          marginBottom: '8px'
+        }}>
+          {role === 'citizen' ? 'Citizen Reporting Portal' : 'Sanitation Authority Grid'}
         </div>
 
         {activeNavItems.map((item) => {
@@ -136,7 +138,11 @@ export default function Sidebar({ currentTab, setTab, stats, role, setRole, user
               <Icon size={18} className="nav-icon" />
               <span style={{ flex: 1 }}>{item.label}</span>
               {item.badge !== undefined && item.badge > 0 && (
-                <span className="nav-badge" style={{
+                <span style={{
+                  fontSize: '11px',
+                  fontWeight: '700',
+                  padding: '2px 7px',
+                  borderRadius: '10px',
                   background: item.id === 'hotspots' ? 'rgba(239, 68, 68, 0.25)' : 'rgba(16, 185, 129, 0.2)',
                   color: item.id === 'hotspots' ? '#fca5a5' : '#86efac',
                   border: item.id === 'hotspots' ? '1px solid rgba(239, 68, 68, 0.4)' : '1px solid rgba(16, 185, 129, 0.4)'
@@ -149,40 +155,22 @@ export default function Sidebar({ currentTab, setTab, stats, role, setRole, user
         })}
       </nav>
 
-      {/* User Profile Card & Sign Out */}
+      {/* Footer Status Badge */}
       <div className="sidebar-footer">
-        <div className="user-profile-widget" style={{ borderColor: roleMeta.color }}>
-          <div className="user-profile-left">
-            <div className="user-avatar-circle" style={{ background: roleMeta.bg, color: roleMeta.color, borderColor: roleMeta.color }}>
-              <RoleIcon size={18} />
-            </div>
-            <div className="user-profile-details">
-              <div className="user-display-name">{user?.name || (role === 'admin' ? 'Officer Swarna' : role === 'worker' ? 'Ravi Kumar' : 'Surya Prakash')}</div>
-              <div className="user-role-tag" style={{ color: roleMeta.color }}>
-                {roleMeta.label}
-              </div>
-            </div>
+        <div className="system-badge">
+          <div className="status-indicator">
+            <div className="status-dot"></div>
+            <span>
+              {role === 'citizen' ? 'Citizen Mode Active' : 'Authority Command Grid'}
+            </span>
           </div>
-
-          {onLogout && (
-            <button
-              onClick={onLogout}
-              className="user-logout-icon-btn"
-              title="Sign Out / Switch Account"
-            >
-              <LogOut size={16} />
-            </button>
-          )}
-        </div>
-
-        {/* Live Subtitle */}
-        <div style={{ marginTop: '8px', fontSize: '11px', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <div className="status-dot"></div>
-          <span>
-            {role === 'citizen' && 'Public reporting mode'}
-            {role === 'admin' && 'Full executive authority'}
-            {role === 'worker' && 'Field dispatch active'}
-          </span>
+          <div style={{ color: 'var(--text-muted)', fontSize: '11px', lineHeight: '1.4' }}>
+            {role === 'citizen' ? (
+              <div>Public reporting & tracking enabled. Internal triage hidden.</div>
+            ) : (
+              <div>Operational dispatch & prioritization unlocked.</div>
+            )}
+          </div>
         </div>
       </div>
     </aside>
