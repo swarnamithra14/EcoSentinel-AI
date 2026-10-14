@@ -1,0 +1,153 @@
+{
+    "dataset_name": "CPCB Indian Surface Water Quality Monitoring Data",
+    "raw_source_path": "data\\raw\\water\\cpcb_water_quality.csv",
+    "total_records": 1991,
+    "total_columns": 12,
+    "features_audited": [
+        "temperature",
+        "dissolved_oxygen",
+        "ph",
+        "conductivity",
+        "bod",
+        "nitrate",
+        "fecal_coliform",
+        "total_coliform"
+    ],
+    "missing_and_sentinels": {
+        "temperature": {
+            "valid_count": 1899,
+            "missing_count": 92,
+            "missing_pct": 4.62,
+            "sentinel_nan_strings": 92,
+            "min": 10.0,
+            "median": 27.0,
+            "mean": 26.209814112690893,
+            "max": 35.0,
+            "std": 3.3663883076406522
+        },
+        "dissolved_oxygen": {
+            "valid_count": 1960,
+            "missing_count": 31,
+            "missing_pct": 1.56,
+            "sentinel_nan_strings": 31,
+            "min": 0.0,
+            "median": 6.7,
+            "mean": 6.392636734693877,
+            "max": 11.4,
+            "std": 1.3329376587526636
+        },
+        "ph": {
+            "valid_count": 1983,
+            "missing_count": 8,
+            "missing_pct": 0.4,
+            "sentinel_nan_strings": 8,
+            "min": 0.0,
+            "median": 7.3,
+            "mean": 112.09067423096319,
+            "max": 67115.0,
+            "std": 1878.9307158608
+        },
+        "conductivity": {
+            "valid_count": 1966,
+            "missing_count": 25,
+            "missing_pct": 1.26,
+            "sentinel_nan_strings": 25,
+            "min": 0.4,
+            "median": 183.0,
+            "mean": 1786.466393692777,
+            "max": 65700.0,
+            "std": 5552.276222740446
+        },
+        "bod": {
+            "valid_count": 1948,
+            "missing_count": 43,
+            "missing_pct": 2.16,
+            "sentinel_nan_strings": 43,
+            "min": 0.1,
+            "median": 1.8965,
+            "mean": 6.940048767967146,
+            "max": 534.5,
+            "std": 29.40002619046773
+        },
+        "nitrate": {
+            "valid_count": 1766,
+            "missing_count": 225,
+            "missing_pct": 11.3,
+            "sentinel_nan_strings": 225,
+            "min": 0.0,
+            "median": 0.516,
+            "mean": 1.6230787089467724,
+            "max": 108.7,
+            "std": 4.090480656634373
+        },
+        "fecal_coliform": {
+            "valid_count": 1675,
+            "missing_count": 316,
+            "missing_pct": 15.87,
+            "sentinel_nan_strings": 316,
+            "min": 0.0,
+            "median": 221.0,
+            "mean": 362529.3647176119,
+            "max": 272521616.0,
+            "std": 8764767.448570497
+        },
+        "total_coliform": {
+            "valid_count": 1859,
+            "missing_count": 132,
+            "missing_pct": 6.63,
+            "sentinel_nan_strings": 132,
+            "min": 0.0,
+            "median": 468.0,
+            "mean": 533687.1656804733,
+            "max": 511090873.0,
+            "std": 14234282.668242926
+        }
+    },
+    "domain_anomalies": {
+        "ph_out_of_range": 89,
+        "negative_do": 0,
+        "negative_bod": 0,
+        "extreme_conductivity": 1,
+        "extreme_coliform": 3
+    },
+    "temporal_coverage": {
+        "2003": 88,
+        "2004": 2,
+        "2005": 119,
+        "2006": 105,
+        "2007": 120,
+        "2008": 159,
+        "2009": 181,
+        "2010": 188,
+        "2011": 231,
+        "2012": 292,
+        "2013": 261,
+        "2014": 245
+    },
+    "top_states": {
+        "NAN": 761,
+        "KERALA": 275,
+        "MAHARASHTRA": 142,
+        "MEGHALAYA": 125,
+        "GOA": 101,
+        "MANIPUR": 76,
+        "PUNJAB": 48,
+        "TAMILNADU": 42,
+        "GUJARAT": 37,
+        "ORISSA": 30
+    },
+    "cpcb_class_distribution": {
+        "Class C (Conventional Treatment)": 556,
+        "Class B (Outdoor Bathing)": 443,
+        "Class D/E (Wildlife/Irrigation)": 357,
+        "Critical (Polluted / Non-Compliant)": 344,
+        "Unclassified_Missing_Params": 150,
+        "Class A (Pristine Drinking)": 141
+    },
+    "audit_visualizations": {
+        "distributions": "outputs\\data_audit\\water_feature_distributions.png",
+        "correlation_matrix": "outputs\\data_audit\\water_correlation_matrix.png",
+        "class_distribution": "outputs\\data_audit\\water_class_distribution.png",
+        "temporal_trends": "outputs\\data_audit\\water_temporal_trends.png"
+    }
+}

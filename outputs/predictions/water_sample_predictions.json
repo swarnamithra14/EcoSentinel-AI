@@ -1,0 +1,284 @@
+[
+    {
+        "scenario_name": "Himalayan Mountain Headwater Stream",
+        "location": "Alaknanda River upstream, Uttarakhand",
+        "measurements": {
+            "dissolved_oxygen": 7.8,
+            "ph": 7.4,
+            "bod": 1.2,
+            "conductivity": 95.0,
+            "nitrate": 0.15,
+            "total_coliform": 24.0,
+            "temperature": 14.5,
+            "fecal_coliform": 6.0
+        },
+        "prediction": {
+            "status": "success",
+            "predicted_class": "Class A",
+            "class_description": "Pristine Drinking Water Source (Safe after disinfection only)",
+            "confidence": 0.9661,
+            "class_probabilities": {
+                "Class A": 0.9661,
+                "Class B": 0.0339,
+                "Class C": 0.0,
+                "Class D/E": 0.0,
+                "Critical": 0.0
+            },
+            "wqi_score": 38.65,
+            "risk_level": "Low Risk",
+            "limiting_factors": [],
+            "recommendations": [
+                "Water meets standard outdoor criteria. Maintain regular periodic monitoring."
+            ],
+            "warnings": [],
+            "input_features": {
+                "dissolved_oxygen": 7.8,
+                "ph": 7.4,
+                "bod": 1.2,
+                "conductivity": 95.0,
+                "nitrate": 0.15,
+                "total_coliform": 24.0,
+                "temperature": 14.5,
+                "fecal_coliform": 6.0
+            }
+        }
+    },
+    {
+        "scenario_name": "Organized Recreational Bathing Ghat",
+        "location": "Haridwar Ganga Ghat, Uttarakhand",
+        "measurements": {
+            "dissolved_oxygen": 6.4,
+            "ph": 7.5,
+            "bod": 2.4,
+            "conductivity": 180.0,
+            "nitrate": 0.45,
+            "total_coliform": 320.0,
+            "temperature": 22.0,
+            "fecal_coliform": 90.0
+        },
+        "prediction": {
+            "status": "success",
+            "predicted_class": "Class B",
+            "class_description": "Outdoor Bathing & Recreational Water Body",
+            "confidence": 0.8891,
+            "class_probabilities": {
+                "Class A": 0.0374,
+                "Class B": 0.8891,
+                "Class C": 0.0269,
+                "Class D/E": 0.04,
+                "Critical": 0.0067
+            },
+            "wqi_score": 57.75,
+            "risk_level": "Low-Moderate Risk",
+            "limiting_factors": [],
+            "recommendations": [
+                "Water meets standard outdoor criteria. Maintain regular periodic monitoring."
+            ],
+            "warnings": [],
+            "input_features": {
+                "dissolved_oxygen": 6.4,
+                "ph": 7.5,
+                "bod": 2.4,
+                "conductivity": 180.0,
+                "nitrate": 0.45,
+                "total_coliform": 320.0,
+                "temperature": 22.0,
+                "fecal_coliform": 90.0
+            }
+        }
+    },
+    {
+        "scenario_name": "Municipal Drinking Water Intake",
+        "location": "Kaveri River raw intake, Tamil Nadu",
+        "measurements": {
+            "dissolved_oxygen": 5.5,
+            "ph": 7.2,
+            "bod": 2.8,
+            "conductivity": 380.0,
+            "nitrate": 1.2,
+            "total_coliform": 2400.0,
+            "temperature": 28.0,
+            "fecal_coliform": 450.0
+        },
+        "prediction": {
+            "status": "success",
+            "predicted_class": "Class C",
+            "class_description": "Drinking Water Source after Conventional Treatment & Disinfection",
+            "confidence": 0.6814,
+            "class_probabilities": {
+                "Class A": 0.0,
+                "Class B": 0.048,
+                "Class C": 0.6814,
+                "Class D/E": 0.1203,
+                "Critical": 0.1503
+            },
+            "wqi_score": 89.65,
+            "risk_level": "Moderate Risk",
+            "limiting_factors": [
+                {
+                    "parameter": "Total Coliform",
+                    "observed_value": "2,400 MPN/100ml",
+                    "threshold": "> 500 MPN/100ml (Exceeds Bathing Safety)",
+                    "severity": "High",
+                    "impact": "Microbiological counts too high for recreational swimming or bathing."
+                }
+            ],
+            "recommendations": [
+                "Water meets standard outdoor criteria. Maintain regular periodic monitoring."
+            ],
+            "warnings": [],
+            "input_features": {
+                "dissolved_oxygen": 5.5,
+                "ph": 7.2,
+                "bod": 2.8,
+                "conductivity": 380.0,
+                "nitrate": 1.2,
+                "total_coliform": 2400.0,
+                "temperature": 28.0,
+                "fecal_coliform": 450.0
+            }
+        }
+    },
+    {
+        "scenario_name": "Agricultural Canal & Wetland",
+        "location": "Kuttanad Lake Basin, Kerala",
+        "measurements": {
+            "dissolved_oxygen": 4.8,
+            "ph": 6.8,
+            "bod": 4.5,
+            "conductivity": 920.0,
+            "nitrate": 3.8,
+            "total_coliform": 850.0,
+            "temperature": 29.5,
+            "fecal_coliform": 210.0
+        },
+        "prediction": {
+            "status": "success",
+            "predicted_class": "Class D/E",
+            "class_description": "Propagation of Wildlife, Fisheries & Agricultural Irrigation",
+            "confidence": 0.46,
+            "class_probabilities": {
+                "Class A": 0.0,
+                "Class B": 0.0133,
+                "Class C": 0.1733,
+                "Class D/E": 0.46,
+                "Critical": 0.3533
+            },
+            "wqi_score": 85.19,
+            "risk_level": "High Risk",
+            "limiting_factors": [
+                {
+                    "parameter": "Dissolved Oxygen (DO)",
+                    "observed_value": "4.80 mg/L",
+                    "threshold": "< 5.0 mg/L (Below Bathing Standard)",
+                    "severity": "High",
+                    "impact": "Unfit for outdoor bathing and recreational human contact."
+                },
+                {
+                    "parameter": "Biochemical Oxygen Demand (BOD)",
+                    "observed_value": "4.50 mg/L",
+                    "threshold": "> 3.0 mg/L (Exceeds Bathing Limits)",
+                    "severity": "Moderate",
+                    "impact": "Moderately polluted water; requires biological treatment before potable use."
+                },
+                {
+                    "parameter": "Total Coliform",
+                    "observed_value": "850 MPN/100ml",
+                    "threshold": "> 500 MPN/100ml (Exceeds Bathing Safety)",
+                    "severity": "High",
+                    "impact": "Microbiological counts too high for recreational swimming or bathing."
+                }
+            ],
+            "recommendations": [
+                "Monitor upstream discharges and inspect storm/drain runoff."
+            ],
+            "warnings": [],
+            "input_features": {
+                "dissolved_oxygen": 4.8,
+                "ph": 6.8,
+                "bod": 4.5,
+                "conductivity": 920.0,
+                "nitrate": 3.8,
+                "total_coliform": 850.0,
+                "temperature": 29.5,
+                "fecal_coliform": 210.0
+            }
+        }
+    },
+    {
+        "scenario_name": "Untreated Urban Sewage & Industrial Drain Outfall",
+        "location": "Najafgarh Drain confluence / Yamuna, Delhi",
+        "measurements": {
+            "dissolved_oxygen": 1.2,
+            "ph": 6.3,
+            "bod": 28.5,
+            "conductivity": 2450.0,
+            "nitrate": 14.2,
+            "total_coliform": 48000.0,
+            "temperature": 31.0,
+            "fecal_coliform": 18000.0
+        },
+        "prediction": {
+            "status": "success",
+            "predicted_class": "Critical",
+            "class_description": "Polluted / Non-Compliant (Severe Ecological & Public Health Hazard)",
+            "confidence": 0.9533,
+            "class_probabilities": {
+                "Class A": 0.0,
+                "Class B": 0.0,
+                "Class C": 0.0133,
+                "Class D/E": 0.0333,
+                "Critical": 0.9533
+            },
+            "wqi_score": 279.59,
+            "risk_level": "Severe / Critical Hazard",
+            "limiting_factors": [
+                {
+                    "parameter": "Dissolved Oxygen (DO)",
+                    "observed_value": "1.20 mg/L",
+                    "threshold": "< 4.0 mg/L (Critical Depletion)",
+                    "severity": "Critical",
+                    "impact": "Severe hypoxia threatening aquatic life, indicating heavy organic waste decomposition."
+                },
+                {
+                    "parameter": "Biochemical Oxygen Demand (BOD)",
+                    "observed_value": "28.50 mg/L",
+                    "threshold": "> 6.0 mg/L (Excessive Organic Pollution)",
+                    "severity": "Critical",
+                    "impact": "Indicates substantial raw domestic sewage or industrial organic effluent."
+                },
+                {
+                    "parameter": "pH Level",
+                    "observed_value": "6.30",
+                    "threshold": "Outside 6.5 \u2013 8.5 Permissible Range",
+                    "severity": "Moderate",
+                    "impact": "Corrosive or alkaline conditions, potentially caused by industrial effluents or chemical leaching."
+                },
+                {
+                    "parameter": "Total Coliform",
+                    "observed_value": "48,000 MPN/100ml",
+                    "threshold": "> 5,000 MPN/100ml (Pathogenic Loading)",
+                    "severity": "Critical",
+                    "impact": "Extreme microbial contamination from sewage; direct human health hazard."
+                }
+            ],
+            "recommendations": [
+                "Immediate artificial aeration required; locate and intercept untreated organic discharge.",
+                "Issue high environmental pollution warning; prioritize drainage inspection.",
+                "Inspect nearby industrial facilities for neutralization compliance.",
+                "Alert local water authorities; issue public health boil/contact advisory."
+            ],
+            "warnings": [],
+            "input_features": {
+                "dissolved_oxygen": 1.2,
+                "ph": 6.3,
+                "bod": 28.5,
+                "conductivity": 2450.0,
+                "nitrate": 14.2,
+                "total_coliform": 48000.0,
+                "temperature": 31.0,
+                "fecal_coliform": 18000.0
+            }
+        }
+    }
+]

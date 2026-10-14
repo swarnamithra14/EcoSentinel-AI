@@ -1,0 +1,100 @@
+{
+    "features": [
+        "dissolved_oxygen",
+        "ph",
+        "bod",
+        "conductivity",
+        "nitrate",
+        "total_coliform",
+        "temperature",
+        "fecal_coliform"
+    ],
+    "feature_count": 8,
+    "class_map": {
+        "0": "Class A",
+        "1": "Class B",
+        "2": "Class C",
+        "3": "Class D/E",
+        "4": "Critical"
+    },
+    "class_descriptions": {
+        "Class A": "Pristine drinking water source (disinfection only)",
+        "Class B": "Outdoor bathing (organized)",
+        "Class C": "Drinking water source after conventional treatment",
+        "Class D/E": "Wildlife propagation, fisheries & irrigation",
+        "Critical": "Polluted / Non-compliant (severe contamination)"
+    },
+    "risk_level_map": {
+        "Class A": "Low Risk",
+        "Class B": "Low-Moderate Risk",
+        "Class C": "Moderate Risk",
+        "Class D/E": "High Risk",
+        "Critical": "Severe / Critical Hazard"
+    },
+    "feature_medians": {
+        "dissolved_oxygen": 6.7,
+        "ph": 7.2,
+        "bod": 1.855,
+        "conductivity": 187.815,
+        "nitrate": 0.52,
+        "total_coliform": 458.0,
+        "temperature": 27.0,
+        "fecal_coliform": 228.0
+    },
+    "feature_ranges": {
+        "dissolved_oxygen": {
+            "min": 0.2,
+            "max": 11.4,
+            "mean": 6.373002329192547,
+            "std": 1.3302914196020479
+        },
+        "ph": {
+            "min": 2.6,
+            "max": 9.01,
+            "mean": 7.216544254658385,
+            "std": 0.6484871711095113
+        },
+        "bod": {
+            "min": 0.1,
+            "max": 534.5,
+            "mean": 6.312256211180124,
+            "std": 26.86567284348014
+        },
+        "conductivity": {
+            "min": 11.0,
+            "max": 65700.0,
+            "mean": 1751.5777102803736,
+            "std": 5544.043486841973
+        },
+        "nitrate": {
+            "min": 0.0,
+            "max": 108.7,
+            "mean": 1.654855184233076,
+            "std": 4.598545866117243
+        },
+        "total_coliform": {
+            "min": 0.0,
+            "max": 511090873.0,
+            "mean": 668864.9153094463,
+            "std": 16905392.90088992
+        },
+        "temperature": {
+            "min": 10.0,
+            "max": 34.5,
+            "mean": 26.146749193548384,
+            "std": 3.3933532722345583
+        },
+        "fecal_coliform": {
+            "min": 0.0,
+            "max": 272521616.0,
+            "mean": 404715.4291740675,
+            "std": 9728935.253251944
+        }
+    },
+    "split_summary": {
+        "train_size": 1288,
+        "val_size": 276,
+        "test_size": 277,
+        "strategy": "stratified"
+    }
+}

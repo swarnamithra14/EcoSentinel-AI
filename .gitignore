@@ -39,3 +39,7 @@ $RECYCLE.BIN/
 # Temporary outputs / scratch
 scratch/
 downloaded_doc_summary.txt
+
+# Node & Frontend
+frontend/node_modules/
+frontend/dist/
