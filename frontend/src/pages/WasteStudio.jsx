@@ -10,11 +10,26 @@ import {
   AlertCircle
 } from 'lucide-react';
 
+const DEFAULT_SAMPLES = [
+  { filename: 'taco_00029.jpg', url: '/samples/waste/taco_00029.jpg' },
+  { filename: 'taco_00406.jpeg', url: '/samples/waste/taco_00406.jpeg' },
+  { filename: 'taco_00493.jpeg', url: '/samples/waste/taco_00493.jpeg' },
+  { filename: 'taco_00495.jpeg', url: '/samples/waste/taco_00495.jpeg' },
+  { filename: 'taco_00705.jpg', url: '/samples/waste/taco_00705.jpg' },
+  { filename: 'taco_00767.jpg', url: '/samples/waste/taco_00767.jpg' },
+  { filename: 'taco_00786.jpg', url: '/samples/waste/taco_00786.jpg' },
+  { filename: 'taco_01033.jpg', url: '/samples/waste/taco_01033.jpg' },
+  { filename: 'taco_01150.jpg', url: '/samples/waste/taco_01150.jpg' },
+  { filename: 'taco_01152.jpg', url: '/samples/waste/taco_01152.jpg' },
+  { filename: 'taco_01162.jpg', url: '/samples/waste/taco_01162.jpg' },
+  { filename: 'taco_01341.jpg', url: '/samples/waste/taco_01341.jpg' }
+];
+
 export default function WasteStudio({ onReportCreated, onTrackTicket }) {
-  const [samples, setSamples] = useState([]);
-  const [selectedSample, setSelectedSample] = useState('');
+  const [samples, setSamples] = useState(DEFAULT_SAMPLES);
+  const [selectedSample, setSelectedSample] = useState(DEFAULT_SAMPLES[0].filename);
   const [uploadedFile, setUploadedFile] = useState(null);
-  const [previewUrl, setPreviewUrl] = useState('');
+  const [previewUrl, setPreviewUrl] = useState(DEFAULT_SAMPLES[0].url);
   const [confThreshold, setConfThreshold] = useState(0.15);
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState(null);
@@ -35,17 +50,21 @@ export default function WasteStudio({ onReportCreated, onTrackTicket }) {
       .then(data => {
         if (data.samples && data.samples.length > 0) {
           setSamples(data.samples);
-          setSelectedSample(data.samples[0].filename);
-          setPreviewUrl(`/api/samples/waste/${data.samples[0].filename}`);
+          if (!selectedSample) {
+            setSelectedSample(data.samples[0].filename);
+            setPreviewUrl(data.samples[0].url || `/samples/waste/${data.samples[0].filename}`);
+          }
         }
       })
-      .catch(err => console.error("Could not fetch samples:", err));
+      .catch(err => {
+        console.warn("Using offline benchmark images. Ensure 'python api.py' is running on port 5000 for AI inference:", err);
+      });
   }, []);
 
   const handleSampleChange = (filename) => {
     setSelectedSample(filename);
     setUploadedFile(null);
-    setPreviewUrl(`/api/samples/waste/${filename}`);
+    setPreviewUrl(`/samples/waste/${filename}`);
     setResults(null);
     setTicketSuccess('');
   };
@@ -94,7 +113,7 @@ export default function WasteStudio({ onReportCreated, onTrackTicket }) {
         setError(data.message || 'Detection failed.');
       }
     } catch (err) {
-      setError(`Network error: ${err.message}`);
+      setError(`Cannot connect to AI backend (${err.message}). Please ensure 'python api.py' is running on port 5000.`);
     } finally {
       setLoading(false);
     }

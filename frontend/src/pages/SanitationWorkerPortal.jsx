@@ -44,7 +44,8 @@ export default function SanitationWorkerPortal({ user, onRefreshStats }) {
       const res = await fetch('/api/reports');
       if (res.ok) {
         const data = await res.json();
-        setTasks(data);
+        const list = Array.isArray(data) ? data : (data.reports || []);
+        setTasks(list);
       }
     } catch (err) {
       console.error("Failed to load worker tasks:", err);
@@ -110,8 +111,10 @@ export default function SanitationWorkerPortal({ user, onRefreshStats }) {
     }
   };
 
-  // Filter tasks
-  const filteredTasks = tasks.filter(t => {
+  // Filter tasks safely
+  const taskList = Array.isArray(tasks) ? tasks : [];
+
+  const filteredTasks = taskList.filter(t => {
     if (filter === 'critical') {
       return (t.severity_level === 'Critical' || t.severity_level === 'High') && t.status !== 'Resolved';
     }
@@ -124,9 +127,9 @@ export default function SanitationWorkerPortal({ user, onRefreshStats }) {
     return true; // 'all'
   });
 
-  const activeCount = tasks.filter(t => t.status !== 'Resolved').length;
-  const criticalCount = tasks.filter(t => (t.severity_level === 'Critical' || t.severity_level === 'High') && t.status !== 'Resolved').length;
-  const completedTodayCount = tasks.filter(t => t.status === 'Resolved').length;
+  const activeCount = taskList.filter(t => t.status !== 'Resolved').length;
+  const criticalCount = taskList.filter(t => (t.severity_level === 'Critical' || t.severity_level === 'High') && t.status !== 'Resolved').length;
+  const completedTodayCount = taskList.filter(t => t.status === 'Resolved').length;
 
   return (
     <div className="worker-portal-container">
@@ -275,7 +278,7 @@ export default function SanitationWorkerPortal({ user, onRefreshStats }) {
             className={`filter-tab ${filter === 'all' ? 'active' : ''}`}
             onClick={() => setFilter('all')}
           >
-            All Orders ({tasks.length})
+            All Orders ({taskList.length})
           </button>
           <button 
             className={`filter-tab ${filter === 'critical' ? 'active' : ''}`}
@@ -354,7 +357,7 @@ export default function SanitationWorkerPortal({ user, onRefreshStats }) {
                     
                     <div className="task-geo-row">
                       <MapPin size={14} color="var(--emerald-400)" />
-                      <span>GPS: {task.latitude?.toFixed(4)}, {task.longitude?.toFixed(4)}</span>
+                      <span>GPS: {Number(task.latitude || 13.0827).toFixed(4)}, {Number(task.longitude || 80.2707).toFixed(4)}</span>
                       <a 
                         href={`https://maps.google.com/?q=${task.latitude},${task.longitude}`} 
                         target="_blank" 

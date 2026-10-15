@@ -47,10 +47,28 @@ def add_cors_headers(response):
     return response
 
 # Handle preflight OPTIONS requests across all routes
-@app.route('/', defaults={'path': ''}, methods=['OPTIONS'])
-@app.route('/<path:path>', methods=['OPTIONS'])
-def options_handler(path):
-    return ('', 204)
+@app.before_request
+def handle_options():
+    if request.method == 'OPTIONS':
+        return ('', 204)
+
+
+@app.route('/', methods=['GET'])
+def root_index():
+    return jsonify({
+        "status": "online",
+        "service": "EcoSentinel AI REST API Server",
+        "frontend": "http://localhost:3000",
+        "endpoints": [
+            "/api/health",
+            "/api/stats",
+            "/api/reports",
+            "/api/hotspots",
+            "/api/samples/waste",
+            "/api/predict/waste",
+            "/api/predict/water"
+        ]
+    })
 
 
 @app.route('/api/health', methods=['GET'])
