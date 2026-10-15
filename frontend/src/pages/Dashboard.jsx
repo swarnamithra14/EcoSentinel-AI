@@ -21,13 +21,13 @@ export default function Dashboard({ stats, setTab, onSelectReport }) {
   };
 
   const getTierBadge = (tier) => {
-    switch (tier) {
-      case 'Critical': return 'badge-critical';
-      case 'High': return 'badge-high';
-      case 'Moderate': return 'badge-moderate';
-      case 'Resolved': return 'badge-low';
-      default: return 'badge-low';
-    }
+    if (!tier) return 'badge-low';
+    const t = tier.toLowerCase();
+    if (t.includes('critical')) return 'badge-critical';
+    if (t.includes('high')) return 'badge-high';
+    if (t.includes('moderate') || t.includes('medium')) return 'badge-moderate';
+    if (t.includes('resolved')) return 'badge-low';
+    return 'badge-low';
   };
 
   return (

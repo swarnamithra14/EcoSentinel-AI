@@ -159,6 +159,11 @@ def calculate_priority_score(
             action_text = action
             break
 
+    # Critical severity or critical water contamination automatically escalates to Critical Attention
+    if (severity == 'Critical' or water_class == 'Critical' or total_score >= 70.0) and status != 'Resolved':
+        tier_name = "Critical Attention"
+        action_text = "Immediate intervention or emergency crew dispatch required within 12 hours."
+
     # Build Narrative
     narrative = (
         f"Assigned score of {total_score}/100 ({tier_name}). "

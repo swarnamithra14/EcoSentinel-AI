@@ -109,7 +109,14 @@ def get_stats():
             wqi_vals.append(r["wqi_score"])
             
     avg_wqi = round(sum(wqi_vals) / len(wqi_vals), 1) if wqi_vals else 68.4
-    critical_hotspots = sum(1 for p in prioritized if p.get("priority_tier") == "Critical")
+    critical_hotspots = sum(
+        1 for p in prioritized 
+        if p.get("status") != "Resolved" and (
+            "critical" in str(p.get("priority_tier", "")).lower() or 
+            p.get("severity_level") == "Critical" or 
+            (p.get("priority_score") or 0) >= 70
+        )
+    )
     
     return jsonify({
         "total_reports": total_reports,
