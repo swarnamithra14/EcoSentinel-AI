@@ -11,9 +11,9 @@ from typing import Dict, List, Optional, Any
 
 # Standard score thresholds
 TIER_THRESHOLDS = [
-    (80, "Critical Attention", "Immediate intervention or emergency crew dispatch required within 12 hours."),
-    (60, "High Priority", "Schedule targeted cleanup or field inspection within 24–48 hours."),
-    (40, "Moderate Priority", "Incorporate into routine ward collection and periodic monitoring routes."),
+    (70, "Critical Attention", "Immediate intervention or emergency crew dispatch required within 12 hours."),
+    (55, "High Priority", "Schedule targeted cleanup or field inspection within 24–48 hours."),
+    (35, "Moderate Priority", "Incorporate into routine ward collection and periodic monitoring routes."),
     (0,  "Low Priority", "Isolated or minor incident; monitor for recurrence.")
 ]
 

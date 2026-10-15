@@ -68,19 +68,67 @@ export default function HotspotsView({ onRefreshNeeded }) {
     }
   };
 
-  const filtered = hotspots.filter(h => {
-    if (filterTier === 'ALL') return true;
-    return h.priority_tier?.toUpperCase() === filterTier.toUpperCase();
-  });
+  const matchesTier = (h, tab) => {
+    if (tab === 'ALL') return true;
 
-  const getTierBadge = (tier) => {
-    switch (tier) {
-      case 'Critical': return 'badge-critical';
-      case 'High': return 'badge-high';
-      case 'Moderate': return 'badge-moderate';
-      case 'Resolved': return 'badge-low';
-      default: return 'badge-low';
+    const tier = (h.priority_tier || '').toUpperCase();
+    const sev = (h.severity_level || '').toUpperCase();
+    const status = (h.status || '').toUpperCase();
+
+    if (tab === 'RESOLVED') {
+      return status === 'RESOLVED' || tier.includes('RESOLVED');
     }
+
+    if (tab === 'CRITICAL') {
+      return (tier.includes('CRITICAL') || sev === 'CRITICAL') && status !== 'RESOLVED';
+    }
+
+    if (tab === 'HIGH') {
+      return (tier.includes('HIGH') || sev === 'HIGH') && !tier.includes('CRITICAL') && sev !== 'CRITICAL' && status !== 'RESOLVED';
+    }
+
+    if (tab === 'MODERATE') {
+      return (tier.includes('MODERATE') || tier.includes('MEDIUM') || sev === 'MEDIUM' || sev === 'MODERATE') && status !== 'RESOLVED';
+    }
+
+    if (tab === 'LOW') {
+      return (tier.includes('LOW') || sev === 'LOW') && status !== 'RESOLVED';
+    }
+
+    return tier.includes(tab);
+  };
+
+  const filtered = hotspots.filter(h => matchesTier(h, filterTier));
+
+  const counts = {
+    ALL: hotspots.length,
+    CRITICAL: hotspots.filter(h => matchesTier(h, 'CRITICAL')).length,
+    HIGH: hotspots.filter(h => matchesTier(h, 'HIGH')).length,
+    MODERATE: hotspots.filter(h => matchesTier(h, 'MODERATE')).length,
+    LOW: hotspots.filter(h => matchesTier(h, 'LOW')).length,
+    RESOLVED: hotspots.filter(h => matchesTier(h, 'RESOLVED')).length
+  };
+
+  const getTierBadge = (tier, severity) => {
+    const t = (tier || '').toLowerCase();
+    const s = (severity || '').toLowerCase();
+    if (t.includes('critical') || s === 'critical') return 'badge-critical';
+    if (t.includes('high') || s === 'high') return 'badge-high';
+    if (t.includes('moderate') || t.includes('medium') || s === 'medium') return 'badge-moderate';
+    if (t.includes('resolved')) return 'badge-low';
+    return 'badge-low';
+  };
+
+  const getCardBorder = (hotspot) => {
+    const t = (hotspot.priority_tier || '').toLowerCase();
+    const s = (hotspot.severity_level || '').toLowerCase();
+    const status = (hotspot.status || '').toLowerCase();
+
+    if (status === 'resolved') return '4px solid #10b981';
+    if (t.includes('critical') || s === 'critical') return '4px solid #ef4444';
+    if (t.includes('high') || s === 'high') return '4px solid #f59e0b';
+    if (t.includes('moderate') || s === 'medium') return '4px solid #38bdf8';
+    return '4px solid #10b981';
   };
 
   return (
@@ -97,26 +145,43 @@ export default function HotspotsView({ onRefreshNeeded }) {
         </div>
 
         {/* Tier Filter Tabs */}
-        <div style={{ display: 'flex', gap: '8px', background: 'rgba(15, 23, 42, 0.7)', padding: '4px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
-          {['ALL', 'CRITICAL', 'HIGH', 'MODERATE', 'RESOLVED'].map(tier => (
-            <button
-              key={tier}
-              onClick={() => setFilterTier(tier)}
-              style={{
-                background: filterTier === tier ? 'var(--emerald-600)' : 'transparent',
-                color: filterTier === tier ? '#ffffff' : 'var(--text-secondary)',
-                border: 'none',
-                padding: '6px 14px',
-                borderRadius: 'var(--radius-sm)',
-                fontSize: '12px',
-                fontWeight: '600',
-                cursor: 'pointer',
-                transition: 'all 0.2s ease'
-              }}
-            >
-              {tier}
-            </button>
-          ))}
+        <div style={{ display: 'flex', gap: '8px', background: 'rgba(15, 23, 42, 0.7)', padding: '4px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)', flexWrap: 'wrap' }}>
+          {['ALL', 'CRITICAL', 'HIGH', 'MODERATE', 'LOW', 'RESOLVED'].map(tier => {
+            const count = counts[tier] ?? 0;
+            const isActive = filterTier === tier;
+            return (
+              <button
+                key={tier}
+                onClick={() => setFilterTier(tier)}
+                style={{
+                  background: isActive ? 'var(--emerald-600)' : 'transparent',
+                  color: isActive ? '#ffffff' : 'var(--text-secondary)',
+                  border: 'none',
+                  padding: '6px 14px',
+                  borderRadius: 'var(--radius-sm)',
+                  fontSize: '12px',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px'
+                }}
+              >
+                <span>{tier}</span>
+                <span style={{
+                  fontSize: '10px',
+                  padding: '1px 6px',
+                  borderRadius: '10px',
+                  background: isActive ? 'rgba(255, 255, 255, 0.25)' : 'rgba(255, 255, 255, 0.08)',
+                  color: isActive ? '#ffffff' : 'var(--text-muted)',
+                  fontWeight: '700'
+                }}>
+                  {count}
+                </span>
+              </button>
+            );
+          })}
         </div>
       </div>
 
@@ -160,6 +225,14 @@ export default function HotspotsView({ onRefreshNeeded }) {
         <div style={{ textAlign: 'center', padding: '60px', color: 'var(--text-muted)' }}>
           Calculating priority scorecards...
         </div>
+      ) : filtered.length === 0 ? (
+        <div className="glass-card" style={{ textAlign: 'center', padding: '50px 20px' }}>
+          <CheckCircle2 size={36} color="var(--emerald-400)" style={{ margin: '0 auto 12px' }} />
+          <h3 style={{ fontSize: '16px', fontWeight: '700' }}>No {filterTier.toLowerCase()} priority hotspots</h3>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '13px', marginTop: '6px' }}>
+            No incident reports currently match the "{filterTier}" filter criteria.
+          </p>
+        </div>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
           {filtered.map((hotspot, idx) => {
@@ -169,9 +242,7 @@ export default function HotspotsView({ onRefreshNeeded }) {
                 key={hotspot.id} 
                 className="glass-card"
                 style={{
-                  borderLeft: hotspot.priority_tier === 'Critical' ? '4px solid var(--rose-500)' :
-                              hotspot.priority_tier === 'High' ? '4px solid var(--amber-500)' :
-                              '4px solid var(--emerald-500)'
+                  borderLeft: getCardBorder(hotspot)
                 }}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '16px', marginBottom: '14px' }}>
@@ -183,7 +254,7 @@ export default function HotspotsView({ onRefreshNeeded }) {
                       <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '18px', fontWeight: '700' }}>
                         {hotspot.location_name}
                       </h3>
-                      <span className={`badge ${getTierBadge(hotspot.priority_tier)}`}>
+                      <span className={`badge ${getTierBadge(hotspot.priority_tier, hotspot.severity_level)}`}>
                         {hotspot.priority_tier}
                       </span>
                       <span style={{
